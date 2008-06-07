@@ -1,0 +1,79 @@
+= Headerize
+
+Headerize is a Rails plugin to allow including Javascript and CSS from within
+your templates, but still have these appear in your HTML's <head> section (as
+$DEITY intended it). It provides a set of helpers that facilitate this and can
+be used in the layout (for outputting the JS and CSS includes) and templates
+(for adding JS and CSS includes to the head).
+
+== Template Tags
+
+In your templates, you can use the two methods +add_stylesheet+ and
++add_javascript+. These are aliased to +add_stylesheets+ and +add_javascripts+
+for adding multiple scripts or stylesheets, respectively. Thus, if one had a
++BooksController+ whose +show+ method needed the <tt>books.css</tt> stylesheet
+and the <tt>books.js</tt> javascript file, at the top of show.html.erb, we would
+put:
+
+ <% add_stylesheet 'books'
+    add_javascript 'books %>
+
+Or, for show.html.haml:
+
+ - add_stylesheet 'books'
+ - add_javascript 'books'
+
+If we also needed pages.js, we could do:
+
+ add_javascript 'books', 'pages'
+
+== Layout Tags
+
+In the layout, within the head, two methods will spit out the accumulated
+stylesheets for this view: +stylesheet_links+ and +javascript_includes+. So, the
+layout for the above might have:
+
+ <html>
+   <head>
+     <%= javascript_include_tag :defaults %>
+     <%= javascript_includes %>
+
+     <%= stylesheet_link_tag 'application' %>
+     <%= stylesheet_links %>
+   </head>
+
+ ...
+
+The returned strings are indented by four spaces by default. This can be
+modified by passing an indentation level:
+
+ <html>
+     <head>
+         <%= javascript_include_tag :defaults %>
+         <%= javascript_includes(:indent => 8) %>
+
+         <%= stylesheet_link_tag 'application' %>
+         <%= stylesheet_links(:indent => 8) %>
+     </head>
+
+ ...
+
+== Extra Options
+
+Stylesheet tags can carry a media type other than screen -- for example, for
+print media. The +add_stylesheet+ method supports this out of the box. In fact,
+invoking +add_stylesheet+ is exactly like invoking +stylesheet_link_tag+, only
+it will be included elsewhere. Thus, you can add the :media option to the end of
+the method:
+
+ <% add_stylesheets 'print', 'more_print', :media => 'print' %>
+
+The same is true of +add_javascript+. This means that, if you want to use Rails
+2.1's caching, you can do this, too:
+
+ <% add_javascripts 'books', 'pages', :cache => true %>
+
+== License and Such
+
+Headerize is Copyright (c) 2008 Antonio Salazar Cardozo, released under the MIT
+license.
