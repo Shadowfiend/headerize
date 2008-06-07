@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../spec_helper'
+require File.dirname(__FILE__) + '/../../lib/headerize/stylesheet_helper.rb'
 
-require 'headerize/stylesheet_helper'
 include Headerize
 
 describe StylesheetHelper do
