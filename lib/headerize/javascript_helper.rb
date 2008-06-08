@@ -10,13 +10,11 @@ module Headerize
     def javascript_includes(opts = {})
       return '' if @javascripts.nil?
 
-      indent_amt = opts[:indent] || 4
-
       includes = @javascripts.inject('') do |str, files_and_opts|
         str << javascript_include_tag(*files_and_opts)
       end
 
-      indent(includes, indent_amt)
+      indent(includes, opts[:indent] || 4)
     end
 
     private

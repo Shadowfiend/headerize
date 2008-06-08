@@ -115,11 +115,11 @@ describe JavascriptHelper, 'when outputting with indentation and one item' do
   end
 
   it 'should not indent the first line' do
-    javascript_includes(:indent => 8).should == "test\n"
+    javascript_includes(:indent => 8).should =~ /^test/
   end
 
   it 'should not indent newlines with no text after them' do
-    javascript_includes(:indent => 8).should == "test\n"
+    javascript_includes(:indent => 8).should =~ /\n$/m
   end
 end
 
@@ -136,6 +136,19 @@ describe JavascriptHelper, 'when outputting with indentation and one item' do
 
   it 'should indent newlines with text after them' do
     javascript_includes(:indent => 8).should =~ /^ {8}power$/
+  end
+end
+
+describe JavascriptHelper, 'when outputting multiple scripts ' +
+    'with no explicit indentation' do
+  before(:each) do
+    self.stub!(:javascript_include_tag).and_return("test\npower\n")
+
+    add_javascript 'test', 'power'
+  end
+
+  it 'should indent with 4 spaces' do
+    javascript_includes.should =~ /^ {4}power$/
   end
 end
 
