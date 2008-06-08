@@ -23,6 +23,8 @@ module Headerize
       nil
     end
 
+    alias_method :add_javascripts, :add_javascript
+
     # Returns all Javascript includes added by +add_javascript+. These includes
     # are indented by 4 spaces by default. Pass the <tt>:indent</tt> option with
     # a different number for a different indentation level.

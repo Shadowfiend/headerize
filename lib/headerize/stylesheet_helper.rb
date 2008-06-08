@@ -22,6 +22,8 @@ module Headerize
       nil
     end
 
+    alias_method :add_stylesheets, :add_stylesheet
+
     # Returns all stylesheet links added by +add_stylesheet+. These links are
     # indented by 4 spaces by default. Pass the <tt>:indent</tt> option with a
     # different number for a different indentation level.
