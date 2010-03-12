@@ -18,7 +18,7 @@ module Headerize
 
         collected = collection.inject('') do |str, args|
           str << send(method_name, *args)
-        end
+        end.uniq
 
         indent(collected, indent_amt)
       end
